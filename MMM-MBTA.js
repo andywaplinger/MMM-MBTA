@@ -250,7 +250,7 @@ Module.register("MMM-MBTA", {
                         var seconds = preETATime % 60;
                         
                         if (this.config.showMinutesOnly) {
-                            if (!minutes) {
+                            if (minutes == null) {
                                 preETACell.innerHTML = "No ETA"
                             } else if (minutes === 0) {
                                 preETACell.innerHTML = "< 1 min";
@@ -533,7 +533,9 @@ Module.register("MMM-MBTA", {
 
         if (data.data.length === 0) {
             this.loaded = true;
-            this.updateDom();
+            if (updateDomAfter) {
+                this.updateDom();
+            }
         } else {
             for (let pred = 0; pred < data["data"].length; pred++) {
                 routeId = data.data[pred].relationships.route.data.id;
